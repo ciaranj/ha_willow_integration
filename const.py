@@ -1,0 +1,3 @@
+"""Some constants."""
+
+DOMAIN = "willow"

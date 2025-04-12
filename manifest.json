@@ -1,0 +1,12 @@
+{
+    "domain": "willow",
+    "name": "Willow",
+    "codeowners": [],
+    "dependencies": [],
+    "documentation": "",
+    "iot_class": "assumed_state",
+    "requirements": [],
+    "version": "0.0.1",
+    "config_flow": true,
+    "integration_type":"device"
+  }
