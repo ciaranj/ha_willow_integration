@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
+from urllib.parse import urljoin
+
+import aiohttp
+
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    CONF_HOST,
-    CONF_PASSWORD,
-    CONF_PORT,
-    CONF_USERNAME,
-    Platform,
-)
+from homeassistant.const import CONF_URL, Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.exceptions import ConfigEntryError
+
+from .const import CONF_ALLOW_INVALID_SSL
 
 PLATFORMS: list[Platform] = [
     Platform.ASSIST_SATELLITE,
@@ -19,22 +19,24 @@ PLATFORMS: list[Platform] = [
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Android IP Webcam from a config entry."""
-    # websession = async_get_clientsession(hass)
-    # cam = PyDroidIPCam(
-    #     websession,
-    #     entry.data[CONF_HOST],
-    #     entry.data[CONF_PORT],
-    #     username=entry.data.get(CONF_USERNAME),
-    #     password=entry.data.get(CONF_PASSWORD),
-    #     ssl=False,
-    # )
-    #    coordinator = AndroidIPCamDataUpdateCoordinator(hass, entry, cam)
-    #   await coordinator.async_config_entry_first_refresh()
+    """Set up Willow ApplicationServer from a config entry."""
 
-    #  entry.runtime_data = coordinator
+    j = []
+    try:
+        async with (
+            aiohttp.ClientSession() as session,
+            session.get(
+                urljoin(entry.data[CONF_URL], "/api/client"),
+                ssl=(False if entry.data[CONF_ALLOW_INVALID_SSL] else None),
+            ) as resp,
+        ):
+            j = await resp.json()
+    except Exception as ex:
+        raise ConfigEntryError(f"Problem connecting to WAS: {ex}") from ex
+
+    entry.runtime_data = j
+
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-
     return True
 
 

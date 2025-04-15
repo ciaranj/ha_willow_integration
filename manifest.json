@@ -8,5 +8,5 @@
     "requirements": [],
     "version": "0.0.1",
     "config_flow": true,
-    "integration_type":"device"
+    "integration_type":"hub"
   }

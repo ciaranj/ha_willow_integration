@@ -1,0 +1,15 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "data": {
+                    "url": "WAS URL",
+                    "allow_invalid_ssl": "Allow Invalid SSL (Insecure)",
+                    "name": "Friendly Name"
+                },
+                "description": "Enter the details to connect to a Willow Application Server",
+                "title": "Willow Application Server"
+            }
+        }
+    }
+}
