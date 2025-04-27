@@ -42,7 +42,6 @@ class Willow(Entity):
         self._registry = dr.async_get(hass)
         self._deviceidentifier = (DOMAIN, mac)
         self._attr_state = AssistSatelliteState.IDLE
-
         hass.bus.async_listen("willow_event", self._handle_event)
 
     def _handle_event(self, call):
