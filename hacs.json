@@ -1,7 +1,6 @@
 {
     "name": "Willow",
     "content_in_root": false,
-    "domains": ["integration"],
     "homeassistant": "2025.3.0",
-    "country": "global"
+    "country": "ALL"
   }
