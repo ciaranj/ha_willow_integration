@@ -26,7 +26,7 @@ async def async_setup_entry(
 
     async_add_entities(
         [
-            Willow(hass, device["label"], device["mac_addr"])
+            Willow(hass, device["label"], device["mac_addr"], device["platform"])
             for device in config_entry.runtime_data
         ]
     )
@@ -35,12 +35,13 @@ async def async_setup_entry(
 class Willow(Entity):
     """Representation of a Willow Unit."""
 
-    def __init__(self, hass, name, mac) -> None:
+    def __init__(self, hass, name, mac, platform) -> None:
         """Initialize an a Willow entity."""
         self._name = name
         self._attr_unique_id = f"{mac}-satellite"
         self._registry = dr.async_get(hass)
         self._deviceidentifier = (DOMAIN, mac)
+        self._platform = platform
         self._attr_state = AssistSatelliteState.IDLE
         hass.bus.async_listen("willow_event", self._handle_event)
 
@@ -67,4 +68,4 @@ class Willow(Entity):
     @property
     def device_info(self) -> DeviceInfo:
         """Return the device info."""
-        return DeviceInfo(identifiers={self._deviceidentifier}, name=self._name)
+        return DeviceInfo(identifiers={self._deviceidentifier}, name=self._name, model=self._platform)
