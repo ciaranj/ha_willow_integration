@@ -46,6 +46,7 @@ class Willow(Entity):
 
     def _handle_event(self, call):
         # TODO: could probably cache the device id for this entity
+        # TODO: should probably create a timer that flushes it back to idle periodically
         device = self._registry.async_get(call.data["device_id"])
         if self._deviceidentifier in device.identifiers:
             if call.data["type"] == "wake_start":
@@ -53,6 +54,8 @@ class Willow(Entity):
             elif call.data["type"] == "wake_end":
                 self._attr_state = AssistSatelliteState.PROCESSING
             elif call.data["type"] == "command_finished":
+                self._attr_state = AssistSatelliteState.RESPONDING
+            elif call.data["type"] == "response_end":
                 self._attr_state = AssistSatelliteState.IDLE
             self.schedule_update_ha_state(True)
 
