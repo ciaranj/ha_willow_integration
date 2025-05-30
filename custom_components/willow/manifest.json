@@ -3,11 +3,11 @@
     "name": "Willow",
     "codeowners": [],
     "dependencies": [],
-    "documentation": "https://github.com/ciaranj/ha_willow_integration/issues",
+    "documentation": "https://github.com/ciaranj/ha_willow_integration",
     "iot_class": "assumed_state",
-    "issue_tracker": "https://github.com/balloob/hue/issues",
+    "issue_tracker": "https://github.com/ciaranj/ha_willow_integration/issues",
     "requirements": [],
-    "version": "0.1.0",
+    "version": "0.1.1",
     "config_flow": true,
     "integration_type":"hub"
   }
