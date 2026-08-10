@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import logging
 
+from homeassistant.components.assist_satellite.entity import AssistSatelliteState
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
-from homeassistant.components.assist_satellite.entity import AssistSatelliteState
 
 from .const import DOMAIN
 
@@ -26,7 +26,13 @@ async def async_setup_entry(
 
     async_add_entities(
         [
-            Willow(hass, device["label"], device["mac_addr"], device["platform"], device["version"])
+            Willow(
+                hass,
+                device["label"],
+                device["mac_addr"],
+                device["platform"],
+                device["version"],
+            )
             for device in config_entry.runtime_data
         ]
     )
@@ -69,4 +75,9 @@ class Willow(Entity):
     @property
     def device_info(self) -> DeviceInfo:
         """Return the device info."""
-        return DeviceInfo(identifiers={self._deviceidentifier}, name=self._name, model=self._platform, sw_version=self._version)
+        return DeviceInfo(
+            identifiers={self._deviceidentifier},
+            name=self._name,
+            model=self._platform,
+            sw_version=self._version,
+        )

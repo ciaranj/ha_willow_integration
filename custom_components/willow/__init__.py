@@ -6,7 +6,6 @@ import asyncio
 from urllib.parse import urljoin
 
 import aiohttp
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_URL, Platform
 from homeassistant.core import HomeAssistant
@@ -42,8 +41,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady(f"Problem connecting to WAS: {ex}") from ex
 
     if not isinstance(devices, list) or any(
-        not isinstance(device, dict)
-        or not REQUIRED_DEVICE_FIELDS <= device.keys()
+        not isinstance(device, dict) or not REQUIRED_DEVICE_FIELDS <= device.keys()
         for device in devices
     ):
         raise ConfigEntryNotReady(
