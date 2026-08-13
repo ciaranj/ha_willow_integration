@@ -7,7 +7,7 @@
     "iot_class": "assumed_state",
     "issue_tracker": "https://github.com/ciaranj/ha_willow_integration/issues",
     "requirements": [],
-    "version": "0.1.1",
+    "version": "0.2.0",
     "config_flow": true,
     "integration_type":"hub"
   }
